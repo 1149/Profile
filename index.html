@@ -10,13 +10,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Slate Gray & Teal -->
-    <!-- Application Structure Plan: A single-page portfolio design with a sticky top navigation bar for easy access to different content sections (Summary, Skills, Experience, Projects, Certifications). The structure is designed for a non-linear exploration, allowing recruiters to jump to the most relevant information. The "Skills" section features an interactive radar chart to visually represent strengths, and the "Experience" section uses a clickable vertical timeline to present chronological data without overwhelming the user. This interactive approach is more engaging than a static document and better showcases a tech-forward profile. -->
-    <!-- Visualization & Content Choices: 
-        - Summary: Goal: Inform. Method: Text block. A concise intro to set the stage.
+    <!-- Application Structure Plan: A single-page portfolio design with a sticky top navigation bar for easy access to different content sections (About Me, More About Me, Skills, Experience, Projects, Certifications, Publications). The structure is designed for a non-linear exploration, allowing recruiters to jump to the most relevant information. The "More About Me" section is now an interactive toggle for personal interests. The "Skills" section features an interactive radar chart to visually represent strengths, and the "Experience" section uses a clickable vertical timeline to present chronological data without overwhelming the user. This interactive approach is more engaging than a static document and better showcases a tech-forward profile. -->
+    <!-- Visualization & Content Choices:
+        - About Me: Goal: Inform. Method: Text block. A concise intro to set the stage, with a professional and personal touch.
+        - More About Me: Goal: Inform & Engage. Method: Toggle button revealing text block. Interaction: User clicks a button to show/hide personal interests. Justification: Keeps the initial "About Me" concise while allowing deeper engagement for interested viewers.
         - Skills: Goal: Compare & Organize. Method: Interactive Radar Chart (Chart.js) and dynamic text lists. Interaction: Users click category buttons to filter the skills shown in the text list, providing a focused view. Justification: A radar chart offers a quick visual summary of multi-faceted expertise, while filtering prevents information overload.
         - Experience: Goal: Show Change & Inform. Method: Vertical Timeline (HTML/CSS). Interaction: Clicking a job title reveals its details. Justification: A timeline is intuitive for chronological data, and the on-demand detail reveal keeps the UI clean.
         - Projects: Goal: Inform & Engage. Method: Styled Cards (HTML/CSS). Interaction: Hover effects and clickable links to live demos/code. Justification: Highlights practical work and provides direct access to proof of skill.
         - Certifications: Goal: Inform. Method: Grid layout. Justification: A clean, scannable way to present credentials.
+        - Publications: Goal: Inform. Method: Grid layout with links. Justification: Clearly presents published work and provides direct access to the source.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -62,6 +64,15 @@
                 height: 400px;
             }
         }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .collapsible-content.expanded {
+            max-height: 500px; /* Sufficiently large to show content, adjust if needed */
+            transition: max-height 0.5s ease-in;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -75,11 +86,13 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#summary" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Summary</a>
+                        <a href="#about-me" class="nav-link px-3 py-2 rounded-md text-sm font-medium">About Me</a>
+                        <a href="#more-about-me" class="nav-link px-3 py-2 rounded-md text-sm font-medium">More About Me</a>
                         <a href="#skills" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Skills</a>
                         <a href="#experience" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Experience</a>
                         <a href="#projects" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Projects</a>
                         <a href="#certifications" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Certifications</a>
+                        <a href="#publications" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Publications</a>
                     </div>
                 </div>
                 <div class="md:hidden">
@@ -94,11 +107,13 @@
         </nav>
         <div id="mobile-menu" class="md:hidden hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#summary" class="nav-link block px-3 py-2 rounded-md text-base font-medium">Summary</a>
+                <a href="#about-me" class="nav-link block px-3 py-2 rounded-md text-base font-medium">About Me</a>
+                <a href="#more-about-me" class="nav-link block px-3 py-2 rounded-md text-base font-medium">More About Me</a>
                 <a href="#skills" class="nav-link block px-3 py-2 rounded-md text-base font-medium">Skills</a>
                 <a href="#experience" class="nav-link block px-3 py-2 rounded-md text-base font-medium">Experience</a>
                 <a href="#projects" class="nav-link block px-3 py-2 rounded-md text-base font-medium">Projects</a>
                 <a href="#certifications" class="nav-link block px-3 py-2 rounded-md text-base font-medium">Certifications</a>
+                <a href="#publications" class="nav-link block px-3 py-2 rounded-md text-base font-medium">Publications</a>
             </div>
         </div>
     </header>
@@ -125,18 +140,31 @@
             </div>
         </section>
 
-        <!-- Summary Section -->
-        <section id="summary" class="py-16 md:py-20">
+        <!-- About Me Section -->
+        <section id="about-me" class="py-16 md:py-20">
             <div class="max-w-3xl mx-auto text-center">
-                <h2 class="section-title text-3xl font-bold tracking-tight">Summary</h2>
+                <h2 class="section-title text-3xl font-bold tracking-tight">About Me</h2>
                 <p class="mt-6 text-lg text-slate-600 leading-relaxed">
-                    Results-driven Software Engineer with a passion for AI, specializing in Python, Machine Learning, and scalable intelligent systems. Proven ability to design, develop, and deploy end-to-end AI solutions, including Retrieval Augmented Generation (RAG) systems and ML pipelines. Adept at full-stack development, cloud platforms (AWS, Azure), and CI/CD automation, transitioning expertise towards Generative AI and AI Engineering roles.
+                    I'm a Software Engineer with solid experience in building scalable backend systems, cloud-native data pipelines, and full-stack web applications. I'm skilled in Python, Java, and .NET Core, with strong expertise in developing distributed systems using AWS (Lambda, Glue, S3), Azure (ADF, Functions), and modern frameworks like FastAPI and Spring Boot. I enjoy designing ETL workflows, integrating with SQL/NoSQL databases (PostgreSQL, Snowflake, Cosmos DB), and automating infrastructure using Terraform and CI/CD pipelines. My background includes using foundational AI concepts—like large language models, semantic search, and NLP—to enhance data-driven solutions and build intelligent features into modern applications. I'm committed to creating efficient, secure, and production-grade systems that power real-time analytics and intelligent user experiences.
                 </p>
             </div>
         </section>
 
+        <!-- More About Me (Hobbies) Section -->
+        <section id="more-about-me" class="py-16 md:py-20 bg-slate-100 rounded-2xl">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="section-title text-3xl font-bold tracking-tight">More About Me</h2>
+                <button id="toggle-hobbies-button" class="mt-6 px-6 py-3 bg-teal-600 text-white rounded-full font-semibold shadow-lg hover:bg-teal-700 transition-colors duration-300">
+                    Curious? Click to Discover More!
+                </button>
+                <div id="hobbies-content" class="collapsible-content mt-6 text-lg text-slate-600 leading-relaxed">
+                    <p>When I'm not busy debugging code or designing data pipelines, you can usually find me attempting to conquer the great outdoors through camping and hiking – sometimes successfully, sometimes just providing a good laugh for the local wildlife. In the kitchen, I'm a self-proclaimed "culinary explorer," always ready to experiment with new recipes, from perfecting a tricky soufflé to surprisingly edible international dishes. Beyond that, I enjoy diving into anime, strategizing over board games (I'm competitive, but in a fun way, I promise!), and occasionally trying to learn new languages, often with more enthusiasm than actual fluency. These varied interests keep my problem-solving circuits well-oiled and ensure life outside the screen is just as engaging!</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Skills Section -->
-        <section id="skills" class="py-16 md:py-20 bg-slate-100 rounded-2xl">
+        <section id="skills" class="py-16 md:py-20">
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-title text-3xl font-bold tracking-tight text-center">Technical Skills</h2>
                 <p class="mt-4 text-center text-slate-600">A visual overview of my technical landscape. Click the buttons to filter the list.</p>
@@ -165,7 +193,7 @@
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="py-16 md:py-20">
+        <section id="experience" class="py-16 md:py-20 bg-slate-100 rounded-2xl">
             <h2 class="section-title text-3xl font-bold tracking-tight text-center">Professional Experience</h2>
             <div class="mt-12 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="md:col-span-1">
@@ -180,7 +208,7 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-16 md:py-20 bg-slate-100 rounded-2xl">
+        <section id="projects" class="py-16 md:py-20">
             <h2 class="section-title text-3xl font-bold tracking-tight text-center">AI/ML Projects</h2>
             <div class="mt-12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-1 transition-transform duration-300 flex flex-col">
@@ -200,7 +228,7 @@
         </section>
 
         <!-- Certifications Section -->
-        <section id="certifications" class="py-16 md:py-20">
+        <section id="certifications" class="py-16 md:py-20 bg-slate-100 rounded-2xl">
             <h2 class="section-title text-3xl font-bold tracking-tight text-center">Certifications</h2>
             <div class="mt-12 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
                 <div class="bg-white p-6 rounded-lg shadow">
@@ -226,8 +254,20 @@
             </div>
         </section>
 
+        <!-- Publications Section -->
+        <section id="publications" class="py-16 md:py-20">
+            <h2 class="section-title text-3xl font-bold tracking-tight text-center">Publications</h2>
+            <div class="mt-12 max-w-3xl mx-auto grid grid-cols-1 gap-6 text-center">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="font-semibold text-slate-800">Voice Automation Agricultural Systems using IOT</h3>
+                    <p class="text-sm text-slate-500 mt-1">IEEE · November 13, 2021</p>
+                    <a href="https://ieeexplore.ieee.org/document/9579842" target="_blank" class="mt-3 inline-block text-sm font-semibold text-teal-600 hover:text-teal-700">View Publication →</a>
+                </div>
+            </div>
+        </section>
+
     </main>
-    
+
     <footer class="bg-slate-800 text-slate-300 py-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p>&copy; 2025 Avinash Yandapalli. All Rights Reserved.</p>
@@ -262,7 +302,7 @@
             // Active nav link highlighting on scroll
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-link');
-            
+
             window.onscroll = () => {
                 let current = '';
                 sections.forEach(section => {
@@ -285,7 +325,7 @@
                 languages: ['Python (FastAPI, Flask, PySpark)', 'Java/J2EE (Spring Boot)', 'C# (ASP.NET Core)', 'JavaScript (React.js, Node.js, TypeScript)', 'SQL', 'Go'],
                 ai: ['Generative AI', 'LLMs (Google Gemini)', 'RAG', 'Semantic Search', 'NLP (SpaCy)', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'DeepStream SDK', 'NVIDIA TAO Toolkit'],
                 cloud: ['AWS (Lambda, S3, API Gateway, DynamoDB, Glue, Athena)', 'Azure (Data Factory, Functions, Cosmos DB)', 'Docker', 'Kubernetes'],
-                databases: ['PostgreSQL', 'SQL Server', 'MySQL', 'MongoDB', 'DynamoDB', 'Firestore', 'Snowflake'],
+                databases: ['PostgreSQL', 'SQL Server', 'MySQL', 'MongoDB', 'DynamoDB', 'Firestore', 'Snowflake', 'Elasticsearch'],
                 devops: ['Git', 'GitHub', 'Azure DevOps', 'GitLab CI/CD', 'Jenkins', 'Terraform', 'Apache Spark', 'Airflow', 'Postman', 'Pytest', 'JUnit']
             };
 
@@ -389,9 +429,10 @@
                     period: 'Jan 2025 – Present',
                     location: 'McLean, VA',
                     details: [
-                        'Contributed to the HRSA Electronic Handbooks (EHBs) project, enhancing web application features for federal grants and program management using ASP.NET Core, C#, Java, JavaScript, jQuery, and Razor views.',
-                        'Integrated APIs and optimized SQL Server queries to streamline user workflows and ensure data integrity.',
-                        'Participated in the full SDLC, including testing, debugging, and deployment via Azure DevOps pipelines.'
+                        'Enhanced web application features and data management for federal grants using ASP.NET Core, C#, Java, JavaScript, jQuery, and Razor views.',
+                        'Engineered robust API integrations to create seamless data ingestion pipelines.',
+                        'Optimized SQL Server queries and data models, improving data integrity, performance, and reporting efficiency.',
+                        'Participated in the full SDLC, including testing, debugging, and Azure DevOps deployments, ensuring reliable data handling.'
                     ]
                 },
                 {
@@ -400,9 +441,9 @@
                     period: 'Aug 2024 – Jan 2025',
                     location: 'McLean, VA',
                     details: [
-                        'Built and automated data pipelines for marketing data using Python, Apache Spark, and AWS Glue, processing large datasets for partner payout management.',
-                        'Developed backend services with Flask and managed data storage in Snowflake and S3.',
-                        'Utilized Airflow and AWS Lambda for workflow automation, contributing to scalable data infrastructure.'
+                        'Built and automated Python-based data pipelines using Apache Spark and AWS Glue for large-scale marketing data processing.',
+                        'Developed Flask backend services and managed data storage in Snowflake and S3.',
+                        'Automated workflows with Airflow and AWS Lambda, contributing to scalable data infrastructure.'
                     ]
                 },
                 {
@@ -411,9 +452,9 @@
                     period: 'Jan 2024 – Jul 2024',
                     location: 'Sterling, VA',
                     details: [
-                        'Developed a full-stack web application (React.js, Python FastAPI, .NET Core) with Firebase authentication and Redux for state management, deployed on Azure.',
+                        'Developed a full-stack web application (React.js, Python FastAPI, .NET Core) with Firebase authentication and Redux, deployed on Azure.',
                         'Built data pipelines with PySpark and Azure Data Factory, integrating Cosmos DB and Elasticsearch.',
-                        'Supported chatbot features via Python APIs and contributed to CI/CD and infrastructure automation using Azure DevOps, Terraform, and Azure Functions.'
+                        'Supported chatbot features via Python APIs; contributed to CI/CD and infrastructure automation (Azure DevOps, Terraform).'
                     ]
                 },
                 {
@@ -422,9 +463,9 @@
                     period: 'Feb 2021 – Dec 2021',
                     location: 'Remote',
                     details: [
-                        'Designed and developed Python-driven data workflows to automate financial data processing and reporting.',
-                        'Built ETL pipelines using Azure Data Factory, transforming raw data into actionable insights for Power BI and Tableau.',
-                        'Streamlined data ingestion and validation with FastAPI, Pandas, and Azure Blob Storage; implemented CI/CD in Azure DevOps.'
+                        'Designed Python-driven data workflows to automate financial data processing and reporting.',
+                        'Built ETL pipelines using Azure Data Factory for Power BI and Tableau insights.',
+                        'Streamlined data ingestion/validation with FastAPI, Pandas, Azure Blob Storage; implemented CI/CD in Azure DevOps.'
                     ]
                 }
             ];
@@ -442,7 +483,7 @@
                         ${job.details.map(d => `<li>${d}</li>`).join('')}
                     </ul>
                 `;
-                
+
                 document.querySelectorAll('.timeline-item').forEach((item, i) => {
                     item.classList.toggle('active', i === index);
                 });
@@ -461,6 +502,19 @@
             });
 
             displayExperience(0); // Display the first job by default
+
+            // Hobbies/More About Me Toggle Logic
+            const toggleHobbiesButton = document.getElementById('toggle-hobbies-button');
+            const hobbiesContent = document.getElementById('hobbies-content');
+
+            toggleHobbiesButton.addEventListener('click', () => {
+                hobbiesContent.classList.toggle('expanded');
+                if (hobbiesContent.classList.contains('expanded')) {
+                    toggleHobbiesButton.textContent = 'Show Less';
+                } else {
+                    toggleHobbiesButton.textContent = 'Curious? Click to Discover More!';
+                }
+            });
         });
     </script>
 </body>
